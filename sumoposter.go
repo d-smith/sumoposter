@@ -12,6 +12,7 @@ import (
 )
 
 var wg sync.WaitGroup
+var messageCount int
 
 func main() {
 	//Grab the endpoint address
@@ -46,6 +47,8 @@ func main() {
 
 	wg.Wait()
 
+	log.Println("processed ", messageCount, " messages.")
+
 	if err := scanner.Err(); err != nil {
 		log.Fatal(err)
 	}
@@ -61,6 +64,7 @@ func statusOk(status int) bool {
 
 func postMessage(sumoName, endpoint string, msg []byte) {
 	defer wg.Done()
+	messageCount += 1
 	client := &http.Client{}
 	req, err := http.NewRequest("POST", endpoint, bytes.NewReader(msg))
 	if err != nil {
