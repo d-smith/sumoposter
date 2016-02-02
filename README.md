@@ -36,7 +36,7 @@ Conn close
 
 To get around this, I wrote my own message poster, which can be integrated into fluend like this:
 
-<pre>
+```xml
 <source>
   type tail
   path /home/vagrant/goxavi/src/github.com/xtracdev/xavisample/xs.log
@@ -62,7 +62,8 @@ To get around this, I wrote my own message poster, which can be integrated into 
   @type stdout
   </store>
 </match>
-</pre>
+```
+
 
 Note in the above configuration the stdout output is used just for debugging purposes - it would be removed for normal usage.
 
