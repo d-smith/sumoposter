@@ -12,6 +12,7 @@ import (
 )
 
 var wg sync.WaitGroup
+var mutex sync.Mutex
 var messageCount int
 
 func main() {
@@ -76,7 +77,10 @@ func postMessage(sumoName, endpoint string, msg []byte) {
 		req.Header.Add("X-Sumo-Name", sumoName)
 	}
 
+	//Ol' Sumologic doesn't like concurrent posts it appears
+	mutex.Lock()
 	resp, err := client.Do(req)
+	mutex.Unlock()
 	if err != nil {
 		logError(err, msg)
 		return
